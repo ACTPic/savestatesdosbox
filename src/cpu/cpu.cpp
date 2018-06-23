@@ -2505,13 +2505,17 @@ Bit16u CPU_FindDecoderType( CPU_Decoder *decoder )
 	else if( cpudecoder == &CPU_Core_Prefetch_Run ) decoder_idx = 1;
 	else if( cpudecoder == &CPU_Core_Simple_Run ) decoder_idx = 2;
 	else if( cpudecoder == &CPU_Core_Full_Run ) decoder_idx = 3;
+#if (C_DYNAMIC_X86)
 	else if( cpudecoder == &CPU_Core_Dyn_X86_Run ) decoder_idx = 4;
+#endif
 #if (C_DYNREC)
 	else if( cpudecoder == &CPU_Core_Dynrec_Run ) decoder_idx = 5;
 #endif
 
 	else if( cpudecoder == &CPU_Core_Normal_Trap_Run ) decoder_idx = 100;
+#if (C_DYNAMIC_X86)
 	else if( cpudecoder == &CPU_Core_Dyn_X86_Trap_Run ) decoder_idx = 101;
+#endif
 #if(C_DYNREC)
 	else if( cpudecoder == &CPU_Core_Dynrec_Trap_Run ) decoder_idx = 102;
 #endif
@@ -2534,13 +2538,17 @@ CPU_Decoder *CPU_IndexDecoderType( Bit16u decoder_idx )
 		case 1: cpudecoder = &CPU_Core_Prefetch_Run; break;
 		case 2: cpudecoder = &CPU_Core_Simple_Run; break;
 		case 3: cpudecoder = &CPU_Core_Full_Run; break;
+#if (C_DYNAMIC_X86)
 		case 4: cpudecoder = &CPU_Core_Dyn_X86_Run; break;
+#endif
 #if (C_DYNREC)
 		case 5: cpudecoder = &CPU_Core_Dynrec_Run; break;
 #endif
 
 		case 100: cpudecoder = &CPU_Core_Normal_Trap_Run; break;
+#if (C_DYNAMIC_X86)
 		case 101: cpudecoder = &CPU_Core_Dyn_X86_Trap_Run; break;
+#endif
 #if (C_DYNREC)
 		case 102: cpudecoder = &CPU_Core_Dynrec_Trap_Run; break;
 #endif
@@ -2727,7 +2735,9 @@ private:
 			cpudecoder = CPU_IndexDecoderType(200);
 		}
 
+#if (C_DYNAMIC_X86)
 		CPU_Core_Dyn_X86_Cache_Reset();
+#endif
 	}
 } dummy;
 }
