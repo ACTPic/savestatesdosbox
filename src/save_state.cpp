@@ -75,7 +75,6 @@ std::string compress(const std::string& input) { //throw (SaveState::Error)
 		throw SaveState::Error("Compression failed!");
 
 	output.resize(actualSize);
-	::memset(&output[0], 0, actualSize);
 
 	//save size of uncompressed data
 	const size_t uncompressedSize = input.size(); //save size of uncompressed data
