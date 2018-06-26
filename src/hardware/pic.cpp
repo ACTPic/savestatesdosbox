@@ -672,7 +672,9 @@ const void *pic_state_event_table[] = {
 	cmos_timerevent_PIC_Event,
 	DISNEY_disable_PIC_Event,
 	GUS_TimerEvent_PIC_Event,
+#if C_IPX
 	IPX_AES_EventHandler_PIC_Event,
+#endif
 	KEYBOARD_TransferBuffer_PIC_Event,
 	MOUSE_Limit_Events_PIC_Event,
 	MPU401_Event_PIC_Event,
@@ -701,8 +703,10 @@ const void *pic_state_event_table[] = {
 
 const void *pic_state_timer_table[] = {
 	NULL,
+#if C_IPX
 	IPX_ClientLoop_PIC_Timer,
 	IPX_ServerLoop_PIC_Timer,
+#endif
 	KEYBOARD_TickHandler_PIC_Timer,
 	KEYBOARD_TickHandler_PIC_Timer,
 	MIXER_Mix_NoSound_PIC_Timer,
