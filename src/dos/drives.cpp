@@ -111,8 +111,8 @@ void Set_Label(char const * const input, char * const output, bool cdrom) {
 
 
 DOS_Drive::DOS_Drive() {
-	curdir[0]=0;
-	info[0]=0;
+	::memset(curdir, 0, sizeof(curdir));
+	::memset(info, 0, sizeof(info));
 }
 
 char * DOS_Drive::GetInfo(void) {
