@@ -618,28 +618,28 @@ void MEM_Init(Section * sec) {
 //save state support
 extern void* VGA_PageHandler_Func[16];
 
-Bit32u Memory_PageHandler_table[] = 
+intptr_t Memory_PageHandler_table[] =
 {
-	NULL,
-	(Bit32u) &ram_page_handler,
-	(Bit32u) &rom_page_handler,
+	0,
+	(intptr_t) &ram_page_handler,
+	(intptr_t) &rom_page_handler,
 
-	(Bit32u) VGA_PageHandler_Func[0],
-	(Bit32u) VGA_PageHandler_Func[1],
-	(Bit32u) VGA_PageHandler_Func[2],
-	(Bit32u) VGA_PageHandler_Func[3],
-	(Bit32u) VGA_PageHandler_Func[4],
-	(Bit32u) VGA_PageHandler_Func[5],
-	(Bit32u) VGA_PageHandler_Func[6],
-	(Bit32u) VGA_PageHandler_Func[7],
-	(Bit32u) VGA_PageHandler_Func[8],
-	(Bit32u) VGA_PageHandler_Func[9],
-	(Bit32u) VGA_PageHandler_Func[10],
-	(Bit32u) VGA_PageHandler_Func[11],
-	(Bit32u) VGA_PageHandler_Func[12],
-	(Bit32u) VGA_PageHandler_Func[13],
-	(Bit32u) VGA_PageHandler_Func[14],
-	(Bit32u) VGA_PageHandler_Func[15],
+	(intptr_t) VGA_PageHandler_Func[0],
+	(intptr_t) VGA_PageHandler_Func[1],
+	(intptr_t) VGA_PageHandler_Func[2],
+	(intptr_t) VGA_PageHandler_Func[3],
+	(intptr_t) VGA_PageHandler_Func[4],
+	(intptr_t) VGA_PageHandler_Func[5],
+	(intptr_t) VGA_PageHandler_Func[6],
+	(intptr_t) VGA_PageHandler_Func[7],
+	(intptr_t) VGA_PageHandler_Func[8],
+	(intptr_t) VGA_PageHandler_Func[9],
+	(intptr_t) VGA_PageHandler_Func[10],
+	(intptr_t) VGA_PageHandler_Func[11],
+	(intptr_t) VGA_PageHandler_Func[12],
+	(intptr_t) VGA_PageHandler_Func[13],
+	(intptr_t) VGA_PageHandler_Func[14],
+	(intptr_t) VGA_PageHandler_Func[15],
 };
 
 
@@ -659,12 +659,12 @@ private:
 
 
 		// assume 256MB max memory
-		size_table = sizeof(Memory_PageHandler_table) / sizeof(Bit32u);
+		size_table = sizeof(Memory_PageHandler_table) / sizeof(intptr_t);
 		for( int lcv=0; lcv<memory.pages; lcv++ ) {
 			pagehandler_idx[lcv] = 0xff;
 
 			for( int lcv2=0; lcv2<size_table; lcv2++ ) {
-				if( (Bit32u) memory.phandlers[lcv] == Memory_PageHandler_table[lcv2] ) {
+				if( (intptr_t) memory.phandlers[lcv] == Memory_PageHandler_table[lcv2] ) {
 					pagehandler_idx[lcv] = lcv2;
 					break;
 				}

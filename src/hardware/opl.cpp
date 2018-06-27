@@ -1467,7 +1467,7 @@ void adlib_savestate( std::ostream& stream )
 
 
 	for( int lcv=0; lcv<MAXOPERATORS; lcv++ ) {
-		cur_wform_idx[lcv] = ((Bit32u) (op[lcv].cur_wform)) - ((Bit32u) &wavtable);
+		cur_wform_idx[lcv] = ((intptr_t) (op[lcv].cur_wform)) - ((intptr_t) &wavtable);
 	}
 
 	//****************************************************
@@ -1569,6 +1569,6 @@ void adlib_loadstate( std::istream& stream )
 	//****************************************************
 
 	for( int lcv=0; lcv<MAXOPERATORS; lcv++ ) {
-		op[lcv].cur_wform = (Bit16s *) ((Bit32u) &wavtable + cur_wform_idx[lcv]);
+		op[lcv].cur_wform = (Bit16s *) ((intptr_t) &wavtable + cur_wform_idx[lcv]);
 	}
 }

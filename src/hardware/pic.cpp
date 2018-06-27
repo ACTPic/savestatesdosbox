@@ -725,7 +725,7 @@ Bit16u PIC_State_FindEvent( Bit32u addr ) {
 
 	size = sizeof(pic_state_event_table) / sizeof(Bit32u);
 	for( int lcv=0; lcv<size; lcv++ ) {
-		if( addr == (Bit32u) (pic_state_event_table[lcv]) ) return lcv;
+		if( addr == (intptr_t) (pic_state_event_table[lcv]) ) return lcv;
 	}
 
 
@@ -740,7 +740,7 @@ Bit16u PIC_State_FindTimer( Bit32u addr ) {
 
 	size = sizeof(pic_state_timer_table) / sizeof(Bit32u);
 	for( int lcv=0; lcv<size; lcv++ ) {
-		if( addr == (Bit32u) (pic_state_timer_table[lcv]) ) return lcv;
+		if( addr == (intptr_t) (pic_state_timer_table[lcv]) ) return lcv;
 	}
 
 
@@ -750,17 +750,17 @@ Bit16u PIC_State_FindTimer( Bit32u addr ) {
 }
 
 
-Bit32u PIC_State_IndexEvent( Bit16u index ) {
+intptr_t PIC_State_IndexEvent( Bit16u index ) {
 	if( index == 0xffff ) return 0;
 
-	return (Bit32u) (pic_state_event_table[index]);
+	return (intptr_t) (pic_state_event_table[index]);
 }
 
 
-Bit32u PIC_State_IndexTimer( Bit16u index ) {
+intptr_t PIC_State_IndexTimer( Bit16u index ) {
 	if( index == 0xffff ) return 0;
 
-	return (Bit32u) (pic_state_timer_table[index]);
+	return (intptr_t) (pic_state_timer_table[index]);
 }
 
 
@@ -787,11 +787,11 @@ private:
 				for( int lcv=0; lcv<PIC_QUEUESIZE; lcv++ ) {
 					Bit32u pic_addr;
 
-					pic_addr = (Bit32u) pic_queue.entries[lcv].next;
+					pic_addr = (intptr_t) pic_queue.entries[lcv].next;
 					pic_next_ptr[lcv] = 0xffff;
 
 					for( int lcv2=0; lcv2<PIC_QUEUESIZE; lcv2++ ) {
-						if( pic_addr == (Bit32u) &pic_queue.entries[lcv2] ) {
+						if( pic_addr == (intptr_t) &pic_queue.entries[lcv2] ) {
 							pic_next_ptr[lcv] = lcv2;
 							break;
 						}
@@ -831,7 +831,7 @@ private:
 					stream.write(reinterpret_cast<const char*>(&pic_queue.entries[lcv].value), sizeof(pic_queue.entries[lcv].value) );
 
 					// - function ptr
-					event_idx = PIC_State_FindEvent( (Bit32u) (pic_queue.entries[lcv].pic_event) );
+					event_idx = PIC_State_FindEvent( (intptr_t) (pic_queue.entries[lcv].pic_event) );
 					stream.write(reinterpret_cast<const char*>(&event_idx), sizeof(event_idx) );
 
 					// - reloc ptr
@@ -858,7 +858,7 @@ private:
 				ticker_ptr = firstticker;
 				for( int lcv=0; lcv<ticker_size; lcv++ ) {
 					// - function ptr
-					ticker_handler_idx = PIC_State_FindTimer( (Bit32u) (ticker_ptr->handler) );
+					ticker_handler_idx = PIC_State_FindTimer( (intptr_t) (ticker_ptr->handler) );
 					stream.write(reinterpret_cast<const char*>(&ticker_handler_idx), sizeof(ticker_handler_idx) );
 
 					// - reloc new ptr (leave alone)
