@@ -720,10 +720,10 @@ const void *pic_state_timer_table[] = {
 
 
 //#include <windows.h>
-Bit16u PIC_State_FindEvent( Bit32u addr ) {
+Bit16u PIC_State_FindEvent( intptr_t addr ) {
 	int size;
 
-	size = sizeof(pic_state_event_table) / sizeof(Bit32u);
+	size = sizeof(pic_state_event_table) / sizeof(intptr_t);
 	for( int lcv=0; lcv<size; lcv++ ) {
 		if( addr == (intptr_t) (pic_state_event_table[lcv]) ) return lcv;
 	}
@@ -735,10 +735,10 @@ Bit16u PIC_State_FindEvent( Bit32u addr ) {
 }
 
 
-Bit16u PIC_State_FindTimer( Bit32u addr ) {
+Bit16u PIC_State_FindTimer( intptr_t addr ) {
 	int size;
 
-	size = sizeof(pic_state_timer_table) / sizeof(Bit32u);
+	size = sizeof(pic_state_timer_table) / sizeof(intptr_t);
 	for( int lcv=0; lcv<size; lcv++ ) {
 		if( addr == (intptr_t) (pic_state_timer_table[lcv]) ) return lcv;
 	}
@@ -785,7 +785,7 @@ private:
 
 
 				for( int lcv=0; lcv<PIC_QUEUESIZE; lcv++ ) {
-					Bit32u pic_addr;
+					intptr_t pic_addr;
 
 					pic_addr = (intptr_t) pic_queue.entries[lcv].next;
 					pic_next_ptr[lcv] = 0xffff;
