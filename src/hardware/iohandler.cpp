@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2002-2015  The DOSBox Team
+ *  Copyright (C) 2002-2018  The DOSBox Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -406,6 +406,7 @@ Bitu IO_ReadB(Bitu port) {
 		entry->eip=reg_eip;
 		CPU_Push16(SegValue(cs));
 		CPU_Push16(reg_ip);
+		Bit8u old_al = reg_al;
 		Bit16u old_dx = reg_dx;
 		reg_dx = port;
 		RealPt icb = CALLBACK_RealPointer(call_priv_io);
@@ -417,6 +418,7 @@ Bitu IO_ReadB(Bitu port) {
 		iof_queue.used--;
 
 		retval = reg_al;
+		reg_al = old_al;
 		reg_dx = old_dx;
 		memcpy(&lflags,&old_lflags,sizeof(LazyFlags));
 		cpudecoder=old_cpudecoder;
@@ -443,6 +445,7 @@ Bitu IO_ReadW(Bitu port) {
 		entry->eip=reg_eip;
 		CPU_Push16(SegValue(cs));
 		CPU_Push16(reg_ip);
+		Bit16u old_ax = reg_ax;
 		Bit16u old_dx = reg_dx;
 		reg_dx = port;
 		RealPt icb = CALLBACK_RealPointer(call_priv_io);
@@ -454,6 +457,7 @@ Bitu IO_ReadW(Bitu port) {
 		iof_queue.used--;
 
 		retval = reg_ax;
+		reg_ax = old_ax;
 		reg_dx = old_dx;
 		memcpy(&lflags,&old_lflags,sizeof(LazyFlags));
 		cpudecoder=old_cpudecoder;
@@ -479,6 +483,7 @@ Bitu IO_ReadD(Bitu port) {
 		entry->eip=reg_eip;
 		CPU_Push16(SegValue(cs));
 		CPU_Push16(reg_ip);
+		Bit32u old_eax = reg_eax;
 		Bit16u old_dx = reg_dx;
 		reg_dx = port;
 		RealPt icb = CALLBACK_RealPointer(call_priv_io);
@@ -490,6 +495,7 @@ Bitu IO_ReadD(Bitu port) {
 		iof_queue.used--;
 
 		retval = reg_eax;
+		reg_eax = old_eax;
 		reg_dx = old_dx;
 		memcpy(&lflags,&old_lflags,sizeof(LazyFlags));
 		cpudecoder=old_cpudecoder;

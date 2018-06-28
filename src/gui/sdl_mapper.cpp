@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2002-2015  The DOSBox Team
+ *  Copyright (C) 2002-2018  The DOSBox Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -354,7 +354,7 @@ static SDLKey sdlkey_map[]={
 	/* 4 extra keys that don't really exist, but are needed for
 	 * round-trip mapping (dosbox uses RMETA only for hotkeys, it's
 	 * not really mapped to an emulated key) */
-	SDLK_RMETA, SDLK_RSHIFT, SDLK_RALT, SDLK_RCTRL,
+	SDLK_RMETA, SDLK_RSHIFT, SDLK_RALT, SDLK_RCTRL
 };
 #define MAX_SCANCODES (0x80+4)
 /* Make sure that the table above has the expected size.  This
@@ -2459,6 +2459,8 @@ void MAPPER_StartUp(Section * sec) {
 		sdlkey_map[0x41]=SDLK_KP6;
 #elif !defined (WIN32) /* => Linux & BSDs */
 		bool evdev_input = false;
+#ifdef SDL_VIDEO_DRIVER_X11
+//SDL needs to be compiled to use it, else the next makes no sense.
 #ifdef C_X11_XKB
 		SDL_SysWMinfo info;
 		SDL_VERSION(&info.version);
@@ -2477,6 +2479,7 @@ void MAPPER_StartUp(Section * sec) {
 			XkbFreeClientMap(desc,0,True);
 			}
 		}
+#endif
 #endif
 		if (evdev_input) {
 			sdlkey_map[0x67]=SDLK_UP;
